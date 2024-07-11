@@ -7,11 +7,13 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 async function bootstrap() {
 
   const logger = new Logger('Main');
+
+  logger.log('Nats servers: '+envs.natsServers.toString());
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule,
     {
-      transport: Transport.TCP,
+      transport: Transport.NATS,
       options: {
-        port: envs.port
+        servers: envs.natsServers
       }
     });
   app.useGlobalPipes(

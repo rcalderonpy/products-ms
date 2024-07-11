@@ -43,8 +43,8 @@ export class ProductsController {
   update(
     // @Param('id') id: string, 
     // @Body() updateProductDto: UpdateProductDto
-      @Payload() updateProductDto: UpdateProductDto
-  ) {
+    @Payload() updateProductDto: UpdateProductDto
+    ) {
     return this.productsService.update(updateProductDto);
   }
 
@@ -52,5 +52,13 @@ export class ProductsController {
   @MessagePattern({ cmd: 'delete_product' })
   remove(@Payload('id') id: string) {
     return this.productsService.remove(+id);
+  }
+
+  @MessagePattern({ cmd: 'validate_products' })
+  validateProduct (
+    @Payload() ids: number[]
+  ){
+    console.log('validate product');
+    return this.productsService.validateProducts(ids)
   }
 }
